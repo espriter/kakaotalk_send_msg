@@ -4,6 +4,8 @@ import time
 import pyperclip
 import os
 import random
+import pandas as pd
+import datetime
 
 
 def send_msg(my_msg, repeat_number):
@@ -55,6 +57,7 @@ def click_img(imagePath):
 
 
 def click_img_plus_x(imagePath, pixel):
+    pixel = 15
     location = pyautogui.locateCenterOnScreen(imagePath, confidence = conf)
     x, y = location
     pyautogui.click(x + pixel, y)
@@ -93,20 +96,24 @@ def bye_msg():
 
 
 def set_import_msg():
-    with open("send_for_text.txt", "r", encoding='UTF-8') as f:
-        text = f.read()
-        print('======== 아래는 전송할 텍스트입니다. ========\n', text)
-        return text
+    data_set = pd.read_excel('./data/dataset.xlsx', sheet_name = 0, header=0)
+    today_date = datetime.datetime.today().strftime("%Y-%m-%d")
+    selected_context = data_set[data_set['DATE'] == today_date]['CONTEXT'][0]
+    return selected_context
 
 
 def initialize():
     print('Monitor size : ', end='')
     print(pyautogui.size())
     print(pyautogui.position())
-    filter_keyword = input("필터링할 친구 이름. 없으면 enter.  ex) 학생 직장 99 : ")
-    init_number = input("필터링한 친구 기준 시작지점(ex. 필터링된 친구 시작지점) : ")
-    repeat_number = input("반복할 횟수(ex. 필터링 검색된 친구 수) : ")
-    my_msg = input("전송할 메세지. enter를 누를 경우 send_for_text.txt를 전송 : ")
+    # filter_keyword = input("필터링할 친구 이름. 없으면 enter.  ex) 학생 직장 99 : ")
+    # init_number = input("필터링한 친구 기준 시작지점(ex. 필터링된 친구 시작지점) : ")
+    # repeat_number = input("반복할 횟수(ex. 필터링 검색된 친구 수) : ")
+    # my_msg = input("전송할 메세지. enter를 누를 경우 dataset.xlsx의 오늘 날짜 데이터를 전송 : ")
+    filter_keyword = "백업"
+    init_number = 0
+    repeat_number = 1
+    my_msg = 'X'
     print('=================')
     print('메세지 전송 시작!')
     print('=================')
@@ -130,5 +137,5 @@ if __name__ == "__main__":
         set_delay()
         filter_friend(filter_keyword, init_number)
         send_msg(long_msg, repeat_number)
-        logout()
+        # logout()
         bye_msg()
