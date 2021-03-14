@@ -20,6 +20,7 @@ def send_msg(my_msg, repeat_number):
         pyautogui.keyDown('enter')
         pyautogui.keyDown('esc')
         pyautogui.keyDown('down')
+        pyautogui.keyDown('down')
 
 
 def filter_friend(filter_keyword, init_number):
@@ -39,7 +40,7 @@ def filter_friend(filter_keyword, init_number):
         pass
     time.sleep(1)
     # 돋보기 아이콘 오른쪽 클릭
-    click_img_plus_x(img_path+'search_icon.png', 30)
+    click_img_plus_x(img_path+'search_icon.png', 40)
     if filter_keyword == '':
         pyautogui.keyDown('esc')
     else:
@@ -70,8 +71,9 @@ def doubleClickImg (imagePath):
 
 
 def set_delay():
-    delay_time = input("몇 초 후에 프로그램을 실행하시겠습니까? : ")
-    print(delay_time + "초 후에 프로그램을 실행합니다.")
+    # delay_time = input("몇 초 후에 프로그램을 실행하시겠습니까? : ")
+    delay_time = 0
+    print(str(delay_time) + "초 후에 프로그램을 실행합니다.")
     for remaining in range(int(delay_time), 0, -1):
         sys.stdout.write("\r")
         sys.stdout.write("{:2d} seconds remaining.".format(remaining))
@@ -96,9 +98,14 @@ def bye_msg():
 
 
 def set_import_msg():
+    # data_set = pd.read_excel('./repository/kakaotalk_send_msg/data/dataset.xlsx', sheet_name = 0, header=0)
     data_set = pd.read_excel('./data/dataset.xlsx', sheet_name = 0, header=0)
     today_date = datetime.datetime.today().strftime("%Y-%m-%d")
-    selected_context = data_set[data_set['DATE'] == today_date]['CONTEXT'][0]
+    try:
+        selected_context = data_set[data_set['DATE'] == today_date]['CONTEXT'][0]
+    except:
+        print('해당 날짜가 없으므로 프로그램을 종료합니다.')
+        quit()
     return selected_context
 
 
@@ -112,7 +119,7 @@ def initialize():
     # my_msg = input("전송할 메세지. enter를 누를 경우 dataset.xlsx의 오늘 날짜 데이터를 전송 : ")
     filter_keyword = "백업"
     init_number = 0
-    repeat_number = 1
+    repeat_number = 1 # 몇번째 채팅방까지 수행할 지...
     my_msg = 'X'
     print('=================')
     print('메세지 전송 시작!')
