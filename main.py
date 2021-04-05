@@ -113,9 +113,9 @@ def bye_msg():
 
 def set_import_msg():
     # 데이터 호출
-    filter_keyword_data = pd.read_excel('./repository/kakaotalk_send_msg/data/dataset.xlsx', sheet_name = 'FILTER_KEYWORD', header=0, engine='openpyxl')
-    data_set_1 = pd.read_excel('./repository/kakaotalk_send_msg/data/dataset.xlsx', sheet_name = 'CONTEXT_1', header=0, engine='openpyxl')
-    data_set_2 = pd.read_excel('./repository/kakaotalk_send_msg/data/dataset.xlsx', sheet_name = 'CONTEXT_2', header=0, engine='openpyxl')
+    filter_keyword_data = pd.read_excel('./data/dataset.xlsx', sheet_name = 'FILTER_KEYWORD', header=0, engine='openpyxl')
+    data_set_1 = pd.read_excel('./data/dataset.xlsx', sheet_name = 'CONTEXT_1', header=0, engine='openpyxl')
+    data_set_2 = pd.read_excel('./data/dataset.xlsx', sheet_name = 'CONTEXT_2', header=0, engine='openpyxl')
     
     # 오늘 날짜 및 필터 키워드 확인
     filter_lst = []
@@ -153,7 +153,7 @@ if __name__ == "__main__":
     print(pyautogui.position())
 
     # 초기화 데이터 가져오기
-    init_data = pd.read_excel('./repository/kakaotalk_send_msg/data/dataset.xlsx', sheet_name = 'INIT_DATA', header=0, engine='openpyxl')
+    init_data = pd.read_excel('./data/dataset.xlsx', sheet_name = 'INIT_DATA', header=0, engine='openpyxl')
     init_number = int(init_data['INIT_NUM'][0]) # 몇번째 채팅방부터 시작할 지 / 0이면 첫번째 채팅방까지만 수행
     repeat_number = int(init_data['REPEAT_NUM'][0]) # 몇번째 채팅방까지 수행할 지 / 1이면 1개의 채팅방까지만 수행
     delay_time = int(init_data['DELAY_TIME'][0]) # 몇 초 뒤부터 시작할 지
